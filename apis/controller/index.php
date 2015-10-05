@@ -14,7 +14,7 @@ if (isset($_POST['properties'])) {
   $properties = $_POST['properties'];
   $properties = make_properties_for_run($properties);
 
-  include_once($class_path);
+  include_once('../model/' . $class_path);
 
   $class_invoke = new $class_name();
   $result = call_user_func_array(array($class_invoke, $function_name), $properties);

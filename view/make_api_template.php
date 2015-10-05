@@ -16,9 +16,28 @@
     <title>Cohen Bible</title>
 
     <!-- Bootstrap -->
-    <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="bootstrap-3.3.5-dist/css/theme.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 70px;
+        padding-bottom: 30px;
+      }
+
+      .theme-dropdown .dropdown-menu {
+        position: static;
+        display: block;
+        margin-bottom: 20px;
+      }
+
+      .theme-showcase > p > .btn {
+        margin: 5px 0;
+      }
+
+      .theme-showcase .navbar .container {
+        width: auto;
+      }
+    </style>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,58 +91,22 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- Page script -->
     <script type="text/javascript">
-      // A function for bounding events for forms.
-      function bound_form(class_name, function_name) {
-        var class_function_id = class_name + '-' + function_name;
-        var form_id = 'api-form-' + class_function_id;
-        $('#' + form_id).on('submit', function (event) {
-          var formdata = $(this).serializeArray();
-          var input_class_name = formdata[0].value;
-          var input_function_name = formdata[1].value;
-          var input_class_path = formdata[2].value;
-          delete formdata[0];
-          delete formdata[1];
-          delete formdata[2];
-          var options = {
-            url: $('#' + form_id).attr('action'),
-            type: 'post',
-            data: {
-              class_name: input_class_name,
-              function_name: input_function_name,
-              class_path: input_class_path,
-              properties: formdata,
-            },
-            dataType: 'json',
-            error: function(e) {
-              $('.' + class_function_id + '-well').prepend(e.responseText);
-              $('.' + class_function_id + '-well').prepend('<div class="alert alert-danger alert-dismissible" id="alert-unbind-error"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-ban"></i> 出错!</h4>后端接口响应出错！</div>');
-            },
-            success: function(data) {
-
-              $('#result-' + class_function_id + '-well').empty();
-              $('#result-' + class_function_id + '-well').append(data.result);
-            },
-          };
-
-          $.ajax(options);
-          return false;
-        });
-      }
       $(function () {
         // Bound event for forms
         $('#create-api').on('click', function (event) {
           // Create the apis
           var options = {
-            url: '../controller/create_api.php',
+            url: 'controller/create_api.php',
             type: 'get',
             error: function(e) {
               $('#api-class-content').append(e.responseText);
             },
             success: function(data) {
-              $('#api-class-content').append(data);            },
+              $('#api-class-content').append(data);
+            },
           };
           $.ajax(options);
         })
