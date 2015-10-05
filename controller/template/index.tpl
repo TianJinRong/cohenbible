@@ -7,17 +7,21 @@
  */
 // Read class
 if (isset($_POST['properties'])) {
-  // Read submit data.
-  $class_name = $_POST['class_name'];
-  $function_name = $_POST['function_name'];
-  $class_path = $_POST['class_path'];
-  $properties = $_POST['properties'];
-  $properties = make_properties_for_run($properties);
+  // Load class files.
+  include_once('classpath.php');
+  if (isset($is_include_path) && $is_include_path) {
+    // Read submit data.
+    $class_name = $_POST['class_name'];
+    $function_name = $_POST['function_name'];
+    $class_path = $_POST['class_path'];
+    $properties = $_POST['properties'];
+    $properties = make_properties_for_run($properties);
 
-  include_once('../model/' . $class_path);
-
-  $class_invoke = new $class_name();
-  $result = call_user_func_array(array($class_invoke, $function_name), $properties);
+    $class_invoke = new $class_name();
+    $result = call_user_func_array(array($class_invoke, $function_name), $properties);
+  } else {
+    $result = 'Please set the class path in file classpath.php first.';
+  }
   print json_encode(array('result' => $result));
 }
 else {

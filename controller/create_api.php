@@ -89,8 +89,21 @@ function make_class_html($class_packages, $class_template, $class_section) {
   // Replace the class and function links.
   $temp_class_template = str_replace('{<class_content>}', $class_content, $temp_class_template);
 
-  // Output the html file.
-  file_put_contents('api_list.html',$temp_class_template);
+  // Output the class html file and controller file.
+  if (!is_dir('../apis')) {
+    mkdir('../apis');
+  }
+  if (!is_dir('../apis/controller')) {
+    mkdir('../apis/controller');
+  }
+  $api_link = '../apis/api_list.html';
+  $controller_link = '../apis/controller/index.php';
+  $classpath_link = '../apis/controller/classpath.php';
+  $api_controller_index_template = file_get_contents('template/index.tpl');
+  $classpath_template = file_get_contents('template/classpath.tpl');
+  file_put_contents($api_link, $temp_class_template);
+  file_put_contents($controller_link, $api_controller_index_template);
+  file_put_contents($classpath_link, $classpath_template);
 }
 
 // Set the class path.
@@ -109,6 +122,7 @@ $class_template = file_get_contents('template/class_template.tpl');
 $class_section = file_get_contents('template/class_section.tpl');
 $function_template = file_get_contents('template/function_template.tpl');
 $property_template = file_get_contents('template/property_template.tpl');
+
 
 // Get api objects.
 $apis = array();
