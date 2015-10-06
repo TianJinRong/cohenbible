@@ -5,6 +5,7 @@
  * @DateTime:  2015-09-25 22:14:28
  * @Description: Description
  */
+include_once('api.php');
 
 class Cohen
 {
@@ -22,12 +23,16 @@ class Cohen
         return 'Welcome to cohen`s world, dear ' . $user_name;
     }
 
-    /**
-     * a demo funtion
-     * @param   string $user_name   The user`s name of this function.
-     * @return  string              Print the user.
-     */
-    public function test () {
-        return 'Welcome';
+    public static function make_api() {
+        $api = new Api('Cohen', 'hello_world', 'A demo function.');
+        $api->add_property('user_name', 'Your Name');
+        $api->set_path('cohen.php');
+        $apis = array();
+        $apis[] = $api;
+        $results = array(
+            'classname' => 'Cohen',
+            'apis' => $apis
+        );
+        return $results;
     }
 }
